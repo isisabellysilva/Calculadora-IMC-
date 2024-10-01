@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container" id="formularioIMC">
+    <h1>Calcule seu IMC</h1>
+    <div class="form-group">
+        <label for="altura">Altura (m):</label><br>
+        <input type="text" id="altura" placeholder="Ex: 1.75">
+    </div>
+    <div class="form-group">
+        <label for="peso">Peso (kg):</label><br>
+        <input type="text" id="peso" placeholder="Ex: 70">
+    </div>
+    <button onclick="calcularIMC()">Calcular</button>
+</div>
+
+<div class="container hidden" id="resultadoIMC">
+    <h1>Seu IMC</h1>
+    <div id="resultado" class="resultado">
+        <!-- Resultado do IMC será exibido aqui -->
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>IMC</th>
+                <th>Classificação</th>
+                <th>Obesidade (Grau)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Menor que 18,5</td>
+                <td>Magreza</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Entre 18,5 e 24,9</td>
+                <td>Normal</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Entre 25,0 e 29,9</td>
+                <td>Sobrepeso</td>
+                <td>I</td>
+            </tr>
+            <tr>
+                <td>Entre 30,0 e 39,9</td>
+                <td>Obesidade</td>
+                <td>II</td>
+            </tr>
+            <tr>
+                <td>Maior que 40,0</td>
+                <td>Obesidade Grave</td>
+                <td>III</td>
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="resetarFormulario()">Calcular Novamente</button>
+</div>
+
+<script>
+    function calcularIMC() {
+        const altura = parseFloat(document.getElementById('altura').value);
+        const peso = parseFloat(document.getElementById('peso').value);
+
+        if (altura && peso) {
+            const imc = (peso / (altura * altura)).toFixed(1);
+
+            let classificacao = '';
+            if (imc < 18.5) {
+                classificacao = 'Magreza';
+            } else if (imc >= 18.5 && imc <= 24.9) {
+                classificacao = 'Peso normal';
+            } else if (imc >= 25 && imc <= 29.9) {
+                classificacao = 'Sobrepeso';
+            } else if (imc >= 30 && imc <= 39.9) {
+                classificacao = 'Obesidade';
+            } else {
+                classificacao = 'Obesidade Grave';
+            }
+
+            document.getElementById('formularioIMC').classList.add('hidden');
+            document.getElementById('resultadoIMC').classList.remove('hidden');
+        } else {
+            alert("Por favor, insira uma altura e peso válidos.");
+        }
+    }
+
+    function resetarFormulario() {
+        document.getElementById('altura').value = '';
+        document.getElementById('peso').value = '';
+        document.getElementById('formularioIMC').classList.remove('hidden');
+        document.getElementById('resultadoIMC').classList.add('hidden');
+    }
+</script>
+
+</body>
+</html>
